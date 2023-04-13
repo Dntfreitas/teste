@@ -7,6 +7,10 @@ import java.util.ArrayList;
  */
 public class ECB {
 
+    public static final String TRANSFORMATION = "AES/ECB/NoPadding"; // ECB is specified in the transformation to make sure we are using the pure AES algorithm
+    public static final String ALGORITHM = "AES";
+    public static final int CHUNK_SIZE = 16;
+
     /**
      * Encrypts a text using AES in ECB (Electronic Code Book) mode.
      *
@@ -18,11 +22,11 @@ public class ECB {
      * @throws Exception When the encryption mechanism fails
      */
     public static byte[] encrypt ( byte[] text , byte[] key ) throws Exception {
-        Cipher cipher = Cipher.getInstance ( "AES" );
-        SecretKeySpec secretKeySpec = new SecretKeySpec ( key , "AES" );
+        Cipher cipher = Cipher.getInstance ( TRANSFORMATION );
+        SecretKeySpec secretKeySpec = new SecretKeySpec ( key , ALGORITHM );
         cipher.init ( Cipher.ENCRYPT_MODE , secretKeySpec );
-        // Splits the text into chunks of 15 bytes
-        ArrayList < byte[] > textSplits = ByteUtils.splitByteArray ( text , 15 );
+        // Splits the text into chunks of n bytes
+        ArrayList < byte[] > textSplits = ByteUtils.splitByteArray ( text , CHUNK_SIZE );
         // Encrypts each chunk
         byte[] output = new byte[ 0 ];
         for ( byte[] textSplit : textSplits ) {
@@ -43,11 +47,11 @@ public class ECB {
      * @throws Exception When the decryption mechanism fails
      */
     public static byte[] decrypt ( byte[] text , byte[] key ) throws Exception {
-        Cipher cipher = Cipher.getInstance ( "AES" );
-        SecretKeySpec secretKeySpec = new SecretKeySpec ( key , "AES" );
+        Cipher cipher = Cipher.getInstance ( TRANSFORMATION );
+        SecretKeySpec secretKeySpec = new SecretKeySpec ( key , ALGORITHM );
         cipher.init ( Cipher.DECRYPT_MODE , secretKeySpec );
-        // Get padding size
-        ArrayList < byte[] > textSplits = ByteUtils.splitByteArray ( text , 16 );
+        // Splits the text into chunks of n bytes
+        ArrayList < byte[] > textSplits = ByteUtils.splitByteArray ( text , CHUNK_SIZE );
         // Decrypts each chunk
         byte[] output = new byte[ 0 ];
         for ( byte[] textSplit : textSplits ) {
