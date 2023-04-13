@@ -2,8 +2,22 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.ArrayList;
 
+/**
+ * The CBC class contains the methods to encrypt and decrypt a text using AES in CBC (Cipher Block Chaining) mode.
+ */
 public class CBC {
 
+    /**
+     * Encrypts a text using AES in CBC (Cipher Block Chaining) mode.
+     *
+     * @param text  The text to encrypt
+     * @param ivKey The initialization vector
+     * @param key   The symmetrical key to be used in the encryption
+     *
+     * @return The encrypted text
+     *
+     * @throws Exception When the encryption mechanism fails
+     */
     public static byte[] encrypt ( byte[] text , byte[] ivKey , byte[] key ) throws Exception {
         Cipher cipher = Cipher.getInstance ( "AES" );
         SecretKeySpec secretKeySpec = new SecretKeySpec ( key , "AES" );
@@ -22,6 +36,17 @@ public class CBC {
     }
 
 
+    /**
+     * Decrypts a text using AES in CBC (Cipher Block Chaining) mode.
+     *
+     * @param text  The text to decrypt
+     * @param ivKey The initialization vector
+     * @param key   The symmetrical key to be used in the decryption
+     *
+     * @return The decrypted text
+     *
+     * @throws Exception When the decryption mechanism fails
+     */
     public static byte[] decrypt ( byte[] text , byte[] ivKey , byte[] key ) throws Exception {
         Cipher cipher = Cipher.getInstance ( "AES" );
         SecretKeySpec secretKeySpec = new SecretKeySpec ( key , "AES" );
